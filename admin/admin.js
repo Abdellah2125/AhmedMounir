@@ -19,13 +19,9 @@ let gistId = '';
 // ========================================
 
 function checkLoginStatus() {
-    const loggedIn = localStorage.getItem('admin_logged_in');
-    if (loggedIn === 'true') {
-        isLoggedIn = true;
-        showAdminPanel();
-    } else {
-        showLoginPanel();
-    }
+    // إلغاء التحقق من تسجيل الدخول
+    isLoggedIn = true;
+    showAdminPanel();
 }
 
 function showLoginPanel() {
