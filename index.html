@@ -1,171 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmed Mounir | Graphic & UI/UX Designer</title>
-    <meta name="description"
-        content="Ahmed Mounir Guerzize - Graphic Designer & UI UX Designer since 2020. Browse my portfolio of branding, UI/UX, and graphic design projects.">
-
-    <link rel="stylesheet" href="style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=DM+Serif+Display:ital@0;1&display=swap"
-        rel="stylesheet">
+    <title>Ahmed Mounir | Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .redirect-container {
+            text-align: center;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .serif {
+            font-family: 'DM Serif Display', serif;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #1a1a1a;
+            color: white;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+        .auto-redirect {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="redirect-container">
+        <h1>Ahmed <span class="serif">Mounir</span></h1>
+        <p>Graphic Designer & UI/UX Designer</p>
+        <a href="public/index.html" class="btn">Enter Portfolio →</a>
+        <div class="auto-redirect">Redirecting in <span id="countdown">3</span> seconds...</div>
+    </div>
 
-    <header class="header">
-        <div class="navbar-inner">
-            <a href="index.html" class="logo" id="logo-link">
-                <img src="https://cdn.prod.website-files.com/64b9051572782f01aaaf939e/64b9442142503e36f63f4cbc_Ahmed%20Logo.png"
-                    alt="Ahmed Mounir Logo">
-            </a>
-            <nav class="nav-links">
-                <a href="#about" data-nav="about">About</a>
-                <a href="#skills" data-nav="skills">Skills</a>
-                <a href="#works" data-nav="works">Works</a>
-                <a href="#contact" data-nav="contact">Contact</a>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <!-- ============================================ -->
-        <!-- HOMEPAGE CONTENT (يظهر عادة) -->
-        <!-- ============================================ -->
-        <div id="homepage-content">
-
-            <section class="hero">
-                <div class="container">
-                    <div class="hero-inner">
-                        <div class="hero-image">
-                            <img src="photo_2026-03-09_17-08-34.jpg" alt="Ahmed Mounir">
-                        </div>
-                        <div class="hero-content">
-                            <h1 class="hero-name">Ahmed <span class="serif">Mounir</span><br>Guerzize</h1>
-                            <p class="hero-tagline">Pre-Senior Graphic Designer & UI/UX Designer</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="intro">
-                <div class="container-small">
-                    <p class="intro-text">Hey, Ahmed here. <span class="emoji">👋</span> I'm a Pre-Senior Graphic Designer &
-                        UI UX Designer. I love helping folks thrive online with memorable designs.</p>
-                    <p class="intro-subtext">If you need help bringing a dream, idea, or business to life with pro visuals
-                        like websites & branding, or want to see an existing project - give me a call!</p>
-                </div>
-            </section>
-
-            <section id="about">
-                <div class="container-small">
-                    <h2>A <em>little</em> about me.</h2>
-                    <p class="about-text">I'm a passionate graphic designer since 2020, totally in love with crafting
-                        stunning designs that pack a purposeful punch! Oh, and guess what? I'm just 18 years young, but my
-                        creativity knows no bounds! When I'm not slaying design projects, you can catch me nose-deep in
-                        books, exploring new places, or pumping iron at the gym (gotta keep those design muscles sharp,
-                        right?). Let's create some awesomeness together!</p>
-                </div>
-            </section>
-
-            <section id="skills">
-                <div class="container-small">
-                    <h2>My <span class="serif">skills</span></h2>
-
-                    <div class="skill-tags">
-                        <span class="skill-tag">UI UX</span>
-                        <span class="skill-tag">Case Study</span>
-                        <span class="skill-tag">Graphic Design</span>
-                        <span class="skill-tag">Brand Identity</span>
-                        <span class="skill-tag">Wireframes</span>
-                    </div>
-
-                    <div class="skill-description">
-                        <h3>Design</h3>
-                        <p>Then I'll take what I've learned about you and craft a unique, awesome website & brand that's
-                            tailored to meet your needs & goals. Beautiful, responsive, & fully custom are the defaults.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="works">
-                <div class="container">
-                    <h2>Recent <span class="serif">Works</span></h2>
-                    <div class="projects-grid" id="projects-grid-container">
-                        <!-- المشاريع ستظهر هنا ديناميكياً من localStorage -->
-                        <div style="text-align: center; grid-column: 1/-1; padding: 40px;">
-                            Loading projects...
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact">
-                <div class="container-small">
-                    <h2>Want to work <span class="serif">together?</span></h2>
-                    <a href="mailto:ahmedmounirguerzize@gmail.com" class="email-link">ahmedmounirguerzize@gmail.com</a>
-                    <div class="contact-footer-text">
-                        <p>I'd love to work with you — let's talk about your business goals, or Marvel, or life. Up to you,
-                            really.</p>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-
-        <!-- ============================================ -->
-        <!-- PROJECT PAGE CONTENT (يظهر عند اختيار مشروع) -->
-        <!-- ============================================ -->
-        <div id="project-page-content" style="display: none;">
-            <section class="project-hero">
-                <div class="container-small">
-                    <a href="#" id="back-to-home" class="back-link">← Back to Works</a>
-                    <h1 class="project-title-main" id="project-title">Project Title</h1>
-                    <p class="project-category-main" id="project-category">Category</p>
-                </div>
-            </section>
-            <section class="project-gallery">
-                <div class="container">
-                    <div class="gallery-grid" id="project-gallery">
-                        <!-- الصور ستظهر هنا ديناميكياً -->
-                    </div>
-                </div>
-            </section>
-        </div>
-
-    </main>
-
-    <footer class="footer">
-        <div class="container-small">
-            <div class="footer-content">
-                <div class="social-links">
-                    <a href="https://www.instagram.com/ahmedmounir_g?igsh=MXVsMnN6ZnA1OXAxeg==" target="_blank" rel="noopener noreferrer" class="social-link">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2C22 19.4 19.4 22 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                            <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                            <path d="M17.5 6.5L17.51 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                        </svg>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/ahmed-mounir-guerzize-7658261b4?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="social-link">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 8H8V20H4V8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                            <path d="M6 4C7.10457 4 8 4.89543 8 6C8 7.10457 7.10457 8 6 8C4.89543 8 4 7.10457 4 6C4 4.89543 4.89543 4 6 4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                            <path d="M20 20H16V13C16 11.5 15.5 10 13.5 10C11.5 10 11 11.5 11 13V20H7V8H11V10C11.5 9 12.5 8 14.5 8C17.5 8 20 10 20 14V20Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                        </svg>
-                        <span>LinkedIn</span>
-                    </a>
-                </div>
-                <p class="copyright">© 2026 Ahmed Mounir Guerzize. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-
+    <script>
+        // Auto-redirect to portfolio
+        let seconds = 3;
+        const countdownEl = document.getElementById('countdown');
+        
+        const interval = setInterval(() => {
+            seconds--;
+            countdownEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(interval);
+                window.location.href = 'public/index.html';
+            }
+        }, 1000);
+    </script>
 </body>
-
 </html>

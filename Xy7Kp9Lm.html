@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .access-container {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .lock-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        .step-indicator {
+            background: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        input:focus {
+            outline: none;
+            border-color: #1a1a1a;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+        .error {
+            color: #dc2626;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+        .divider {
+            margin: 20px 0;
+            position: relative;
+            text-align: center;
+        }
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        .divider span {
+            background: white;
+            padding: 0 10px;
+            position: relative;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="access-container" id="step1">
+        <div class="lock-icon">🔐</div>
+        <div class="step-indicator">Step 1 of 2</div>
+        <h2>Access Key</h2>
+        <p>Enter your access key to continue</p>
+        
+        <div class="form-group">
+            <input type="password" id="accessKey" placeholder="Access Key" autofocus>
+        </div>
+        <button onclick="verifyAccess()">Verify →</button>
+        
+        <div id="accessError" class="error">❌ Invalid access key</div>
+    </div>
+
+    <div class="access-container" id="step2" style="display: none;">
+        <div class="lock-icon">👤</div>
+        <div class="step-indicator">Step 2 of 2</div>
+        <h2>Admin Login</h2>
+        <p>Enter your credentials</p>
+        
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Password">
+        </div>
+        <button onclick="verifyLogin()">Login →</button>
+        
+        <div id="loginError" class="error">❌ Invalid username or password</div>
+        <div class="divider"><span>OR</span></div>
+        <button onclick="goBack()" style="background: #666;">← Back to Access Key</button>
+    </div>
+
+    <script>
+        // الطبقة 1: رمز الوصول
+        const ACCESS_KEY = 'Ahmed2024Secure';  // 🔑 غير هذا
+        
+        // الطبقة 2: بيانات تسجيل الدخول
+        const ADMIN_USERNAME = 'admin';         // 👤 غير هذا
+        const ADMIN_PASSWORD = 'admin123';      // 🔒 غير هذا
+        
+        // التحقق من جلسة سابقة
+        const step1Completed = sessionStorage.getItem('step1_completed');
+        const step2Completed = sessionStorage.getItem('step2_completed');
+        
+        if (step2Completed === 'true') {
+            // تم إكمال الخطوتين سابقاً → اذهب للوحة التحكم
+            window.location.href = 'admin/admin.html';
+        } else if (step1Completed === 'true') {
+            // تم إكمال الخطوة 1 فقط → اذهب للخطوة 2 مباشرة
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            document.getElementById('username').focus();
+        }
+        
+        // التحقق من رمز الوصول (الخطوة 1)
+        function verifyAccess() {
+            const userKey = document.getElementById('accessKey').value;
+            const errorMsg = document.getElementById('accessError');
+            
+            if (userKey === ACCESS_KEY) {
+                sessionStorage.setItem('step1_completed', 'true');
+                
+                // الانتقال إلى الخطوة 2
+                document.getElementById('step1').style.display = 'none';
+                document.getElementById('step2').style.display = 'block';
+                document.getElementById('username').focus();
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('accessKey').value = '';
+                document.getElementById('accessKey').focus();
+            }
+        }
+        
+        // التحقق من بيانات تسجيل الدخول (الخطوة 2)
+        function verifyLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('loginError');
+            
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('step2_completed', 'true');
+                
+                // التوجيه إلى لوحة التحكم
+                const btn = event.target;
+                btn.textContent = '✓ Redirecting...';
+                btn.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    window.location.href = 'admin/admin.html';
+                }, 500);
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }
+        }
+        
+        // العودة إلى الخطوة 1
+        function goBack() {
+            sessionStorage.removeItem('step1_completed');
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+            document.getElementById('accessKey').value = '';
+            document.getElementById('accessKey').focus();
+        }
+        
+        // دعم زر Enter
+        document.getElementById('accessKey').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyAccess();
+        });
+        
+        document.getElementById('username').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') document.getElementById('password').focus();
+        });
+        
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyLogin();
+        });
+    </script>
+</body>
+</html>
