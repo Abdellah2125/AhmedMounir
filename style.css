@@ -677,3 +677,106 @@ img {
         transition-duration: 0.01ms !important;
     }
 }
+
+
+/* ========================================
+   SPA TRANSITIONS (Dynamic Page Switching)
+   ======================================== */
+
+/* Smooth transition between homepage and project pages */
+#homepage-content,
+#project-page-content {
+    transition: opacity 0.3s ease;
+}
+
+/* Ensure project page content has proper spacing */
+#project-page-content {
+    min-height: 60vh;
+}
+
+/* Fix for back button in SPA mode */
+.back-link {
+    cursor: pointer;
+}
+
+/* Ensure proper stacking when switching views */
+#homepage-content[style*="display: none"],
+#project-page-content[style*="display: none"] {
+    display: none !important;
+}
+
+/* Loading state for projects grid */
+#projects-grid-container.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Smooth appearance for dynamically loaded content */
+.project-card {
+    will-change: transform, opacity;
+}
+
+/* Better gallery image loading */
+.gallery-image {
+    background-color: #f5f5f5;
+    background-image: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loadingShimmer 1.5s infinite;
+}
+
+.gallery-image[src]:not([src=""]) {
+    animation: none;
+    background: none;
+}
+
+@keyframes loadingShimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Project page responsive improvements */
+@media (max-width: 768px) {
+    #project-page-content .project-hero {
+        padding: 40px 0 30px 0;
+    }
+    
+    #project-page-content .project-title-main {
+        font-size: 2rem;
+    }
+    
+    #project-page-content .gallery-grid {
+        gap: 16px;
+    }
+}
+
+/* Ensure footer stays at bottom when project page is short */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Optional: Add transition effect when switching pages */
+#homepage-content,
+#project-page-content {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

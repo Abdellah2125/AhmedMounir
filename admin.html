@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Admin Panel - Manage Projects | Ahmed Mounir</title>
+    <meta name="description" content="Admin panel for managing portfolio projects">
+    
+    <!-- External CSS Files -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin-style.css">
+    
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <div class="navbar-inner">
+            <a href="index.html" class="logo">
+                <img src="https://cdn.prod.website-files.com/64b9051572782f01aaaf939e/64b9442142503e36f63f4cbc_Ahmed%20Logo.png"
+                    alt="Ahmed Mounir Logo">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Back to Site</a>
+                <!-- زر الإعدادات الجديد -->
+                <button id="settingsBtn" class="logout-btn" style="background: #666; display: none;" onclick="openSettingsModal()">⚙️ Settings</button>
+                <button id="logoutBtn" class="logout-btn" style="display: none;">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Login Page -->
+        <div id="login-page" class="login-container">
+            <div class="login-card">
+                <h2>Admin <span class="serif">Login</span></h2>
+                <div id="loginError" class="login-error">Invalid username or password</div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="username" required placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Login</button>
+                </form>
+                <p style="margin-top: 20px; font-size: 12px; color: #888; text-align: center;">
+                    Default: admin / admin123
+                </p>
+            </div>
+        </div>
+
+        <!-- Admin Content (hidden until login) -->
+        <div id="admin-content">
+            <div class="admin-container">
+                <div class="admin-header">
+                    <h1>Project Management <span class="serif">Dashboard</span></h1>
+                    
+                    <!-- الصف الأول: أزرار الإضافة والمزامنة -->
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button onclick="showAddModal()" class="btn desktop-add-btn">+ Add New Project</button>
+                        <button onclick="syncToCloud()" class="btn" style="background: #3b82f6;" id="syncToCloudBtn">☁️ Sync to Cloud</button>
+                        <button onclick="syncFromCloud()" class="btn" style="background: #10b981;" id="syncFromCloudBtn">⬇️ Sync from Cloud</button>
+                    </div>
+                    
+                    <!-- الصف الثاني: أزرار النسخ الاحتياطي -->
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                        <button onclick="exportAllData()" class="btn btn-secondary" style="background: #8b5cf6;">💾 Export Backup</button>
+                        <button onclick="document.getElementById('importFile').click()" class="btn btn-secondary">📂 Import Backup</button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importAllData(this)">
+                    </div>
+                </div>
+
+                <div id="message" class="message"></div>
+
+                <div class="admin-preview">
+                    <h2>Your Projects</h2>
+                    <div id="projectsList"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Action Button -->
+    <button id="fabButton" class="fab" style="display: none;" onclick="showAddModal()" aria-label="Add New Project">+</button>
+
+    <!-- Modal: Add/Edit Project -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Add New Project</h2>
+            <form id="projectForm">
+                <input type="hidden" id="projectId">
+                <div class="form-group">
+                    <label>Project Title *</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Category *</label>
+                    <input type="text" id="category" required>
+                </div>
+                <div class="form-group">
+                    <label>Main Image URL (for project card)</label>
+                    <input type="url" id="mainImage" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label>Gallery Images (one per line)</label>
+                    <textarea id="galleryImages" rows="3"
+                        placeholder="https://image1.jpg&#10;https://image2.jpg&#10;https://image3.jpg"></textarea>
+                    <small>Enter one URL per line</small>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn">Save Project</button>
+                    <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Cloud Settings (جديد) -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2>Cloud Sync <span class="serif">Settings</span></h2>
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label>GitHub Token</label>
+                    <input type="password" id="settingsToken" placeholder="Enter your GitHub Personal Access Token">
+                    <small style="display: block; margin-top: 5px;">
+                        <a href="https://github.com/settings/tokens/new" target="_blank">Click here to create a token</a>
+                        (Required scopes: "gist")
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label>Gist ID (optional, will auto-create)</label>
+                    <input type="text" id="settingsGistId" placeholder="Leave empty to auto-create">
+                    <small>After first sync, Gist ID will be saved automatically</small>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn">Save Settings</button>
+                    <button type="button" onclick="closeSettingsModal()" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container-small">
+            <p>© 2026 Ahmed Mounir Guerzize. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="admin.js"></script>
+</body>
+
+</html>
